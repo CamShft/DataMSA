@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="24f20317771941be8139765e8ff36587" Name="Diagram1">
+        <EntityTypeShape EntityType="MSAModel.Beneficiaire" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Chambre" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Chambres_Emplacement" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Coupons_Bnf" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Coupons_Type" Width="1.5" PointX="3" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Cours_Cond" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Cours_Ins" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Formation" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Formation_Bnf" Width="1.5" PointX="8.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Inscription" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Login" Width="1.5" PointX="9.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Medicament_Ins" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Medicament" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Origine" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Problemes_Ins" Width="1.5" PointX="7.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Problemes_Type" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Provenance" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Revenu_Ins" Width="1.5" PointX="10.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Revenu_Type" Width="1.5" PointX="8.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Sante" Width="1.5" PointX="11.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Scolar" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Source_Ref" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.sysdiagram" Width="1.5" PointX="11.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Type_Hebergment" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Type_ProbSante" Width="1.5" PointX="9" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSAModel.Entreprise" Width="3.5" PointX="12.375" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="MSAModel.FK_Beneficiaire_Origine" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Beneficiaire_Scolar" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Coupons_Bnf_Beneficiaire" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Formation_Bnf_Beneficiaire" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Inscription_Beneficiaire" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Sante_Beneficiaire" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Chambres_Chambres_Emplacement" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Inscription_Chambres" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Coupons_Bnf_Coupons_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Cours_Ins_Cours_Cond" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Cours_Ins_Inscription" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Formation_Bnf_Formation" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Inscription_Provenance" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Inscription_Source_Ref" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Inscription_Type_Hebergment" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Medicament_Ins_Inscription" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Problemes_Ins_Inscription" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Revenu_Ins_Inscription" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Medicament_Ins_Medicaments" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Problemes_Ins_Problemes_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Revenu_Ins_Revenu_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="MSAModel.FK_Sante_Type_ProbSante" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

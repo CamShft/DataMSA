@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MSAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Beneficiaire">
+    <Key>
+      <PropertyRef Name="Bnf_ID" />
+    </Key>
+    <Property Name="Bnf_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bnf_Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Bnf_Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Bnf_DateNais" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Bnf_Sexe" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Bnf_NumAssMaladie" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+    <Property Name="Bnf_NumAssSocial" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="Bnf_NumSecRev" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="Bnf_DateEnregistrementIns" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Scolar_ID" Type="Int32" />
+    <Property Name="Origine_ID" Type="Int32" />
+    <Property Name="Bnf_Total_Hebergement" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Bnf_Total_Coupon" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Origine" Relationship="Self.FK_Beneficiaire_Origine" FromRole="Beneficiaire" ToRole="Origine" />
+    <NavigationProperty Name="Scolar" Relationship="Self.FK_Beneficiaire_Scolar" FromRole="Beneficiaire" ToRole="Scolar" />
+    <NavigationProperty Name="Coupons_Bnf" Relationship="Self.FK_Coupons_Bnf_Beneficiaire" FromRole="Beneficiaire" ToRole="Coupons_Bnf" />
+    <NavigationProperty Name="Formation_Bnf" Relationship="Self.FK_Formation_Bnf_Beneficiaire" FromRole="Beneficiaire" ToRole="Formation_Bnf" />
+    <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Beneficiaire" FromRole="Beneficiaire" ToRole="Inscription" />
+    <NavigationProperty Name="Santes" Relationship="Self.FK_Sante_Beneficiaire" FromRole="Beneficiaire" ToRole="Sante" />
+  </EntityType>
+  <EntityType Name="Chambre">
+    <Key>
+      <PropertyRef Name="Chambre_ID" />
+    </Key>
+    <Property Name="Chambre_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Chambre_Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Emplacement_ID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Chambres_Emplacement" Relationship="Self.FK_Chambres_Chambres_Emplacement" FromRole="Chambres" ToRole="Chambres_Emplacement" />
+    <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Chambres" FromRole="Chambres" ToRole="Inscription" />
+  </EntityType>
+  <EntityType Name="Chambres_Emplacement">
+    <Key>
+      <PropertyRef Name="Emplacement_ID" />
+    </Key>
+    <Property Name="Emplacement_ID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Emplacement_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Emplacemetn_Adresse" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Chambres" Relationship="Self.FK_Chambres_Chambres_Emplacement" FromRole="Chambres_Emplacement" ToRole="Chambres" />
+  </EntityType>
+  <EntityType Name="Coupons_Bnf">
+    <Key>
+      <PropertyRef Name="CouponsBnf_ID" />
+    </Key>
+    <Property Name="CouponsBnf_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CouponsBnf_Qty" Type="Int32" Nullable="false" />
+    <Property Name="CouponsBnf_DateDemande" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Ins_ID" Type="Int32" />
+    <Property Name="Coupons_ID" Type="Int32" Nullable="false" />
+    <Property Name="Bnf_ID" Type="Int32" Nullable="false" />
+    <Property Name="Taxis_Prices" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Beneficiaire" Relationship="Self.FK_Coupons_Bnf_Beneficiaire" FromRole="Coupons_Bnf" ToRole="Beneficiaire" />
+    <NavigationProperty Name="Coupons_Type" Relationship="Self.FK_Coupons_Bnf_Coupons_Type" FromRole="Coupons_Bnf" ToRole="Coupons_Type" />
+  </EntityType>
+  <EntityType Name="Coupons_Type">
+    <Key>
+      <PropertyRef Name="Coupons_ID" />
+    </Key>
+    <Property Name="Coupons_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Coupons_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Coupons_Price" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Coupons_Bnf" Relationship="Self.FK_Coupons_Bnf_Coupons_Type" FromRole="Coupons_Type" ToRole="Coupons_Bnf" />
+  </EntityType>
+  <EntityType Name="Cours_Cond">
+    <Key>
+      <PropertyRef Name="Cours_Cond_ID" />
+    </Key>
+    <Property Name="Cours_Cond_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CoursCond_AvocatName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CoursCond_AvocatTel" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
+    <Property Name="CoursCond_AgentProbName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CoursCond_AgentProbTel" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
+    <Property Name="CourCond_AgentProbPoste" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cours_Ins" Relationship="Self.FK_Cours_Ins_Cours_Cond" FromRole="Cours_Cond" ToRole="Cours_Ins" />
+  </EntityType>
+  <EntityType Name="Cours_Ins">
+    <Key>
+      <PropertyRef Name="Cours_Ins_ID" />
+    </Key>
+    <Property Name="CoursCond_ID" Type="Int32" Nullable="false" />
+    <Property Name="Ins_ID" Type="Int32" Nullable="false" />
+    <Property Name="Cours_Ins_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Cours_Cond" Relationship="Self.FK_Cours_Ins_Cours_Cond" FromRole="Cours_Ins" ToRole="Cours_Cond" />
+    <NavigationProperty Name="Inscription" Relationship="Self.FK_Cours_Ins_Inscription" FromRole="Cours_Ins" ToRole="Inscription" />
+  </EntityType>
+  <EntityType Name="Formation">
+    <Key>
+      <PropertyRef Name="Formation_ID" />
+    </Key>
+    <Property Name="Formation_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Formation_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Formation_Bnf" Relationship="Self.FK_Formation_Bnf_Formation" FromRole="Formation" ToRole="Formation_Bnf" />
+  </EntityType>
+  <EntityType Name="Formation_Bnf">
+    <Key>
+      <PropertyRef Name="Formation_Bnf_ID" />
+    </Key>
+    <Property Name="Formation_Bnf_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bnf_ID" Type="Int32" Nullable="false" />
+    <Property Name="Formation_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Beneficiaire" Relationship="Self.FK_Formation_Bnf_Beneficiaire" FromRole="Formation_Bnf" ToRole="Beneficiaire" />
+    <NavigationProperty Name="Formation" Relationship="Self.FK_Formation_Bnf_Formation" FromRole="Formation_Bnf" ToRole="Formation" />
+  </EntityType>
+  <EntityType Name="Inscription">
+    <Key>
+      <PropertyRef Name="Ins_ID" />
+    </Key>
+    <Property Name="Ins_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ins_DateDebut" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Ins_DateFin" Type="DateTime" Precision="0" />
+    <Property Name="Ins_Raison" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ins_ContactUrgenceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ins_ContactUrgenceTel" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
+    <Property Name="Ins_ContactUrgenceLien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ins_ADMTiers" Type="Boolean" Nullable="false" />
+    <Property Name="Ins_PreuveResidence" Type="Boolean" Nullable="false" />
+    <Property Name="CoursCond_ID" Type="Int32" />
+    <Property Name="Provenance_ID" Type="Int32" Nullable="false" />
+    <Property Name="Ref_ID" Type="Int32" Nullable="false" />
+    <Property Name="Hebergement_ID" Type="Int32" Nullable="false" />
+    <Property Name="Bnf_ID" Type="Int32" Nullable="false" />
+    <Property Name="Chambre_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Beneficiaire" Relationship="Self.FK_Inscription_Beneficiaire" FromRole="Inscription" ToRole="Beneficiaire" />
+    <NavigationProperty Name="Chambre" Relationship="Self.FK_Inscription_Chambres" FromRole="Inscription" ToRole="Chambres" />
+    <NavigationProperty Name="Cours_Ins" Relationship="Self.FK_Cours_Ins_Inscription" FromRole="Inscription" ToRole="Cours_Ins" />
+    <NavigationProperty Name="Provenance" Relationship="Self.FK_Inscription_Provenance" FromRole="Inscription" ToRole="Provenance" />
+    <NavigationProperty Name="Source_Ref" Relationship="Self.FK_Inscription_Source_Ref" FromRole="Inscription" ToRole="Source_Ref" />
+    <NavigationProperty Name="Type_Hebergment" Relationship="Self.FK_Inscription_Type_Hebergment" FromRole="Inscription" ToRole="Type_Hebergment" />
+    <NavigationProperty Name="Medicament_Ins" Relationship="Self.FK_Medicament_Ins_Inscription" FromRole="Inscription" ToRole="Medicament_Ins" />
+    <NavigationProperty Name="Problemes_Ins" Relationship="Self.FK_Problemes_Ins_Inscription" FromRole="Inscription" ToRole="Problemes_Ins" />
+    <NavigationProperty Name="Revenu_Ins" Relationship="Self.FK_Revenu_Ins_Inscription" FromRole="Inscription" ToRole="Revenu_Ins" />
+  </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="User_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="User_Admin" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medicament_Ins">
+    <Key>
+      <PropertyRef Name="Medicament_Ins_ID" />
+    </Key>
+    <Property Name="Medicament_Ins_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MedicamentIns_Mg" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="Medicament_ID" Type="Int32" />
+    <Property Name="Ins_ID" Type="Int32" Nullable="false" />
+    <Property Name="MedicamentIns_FreqDesc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Inscription" Relationship="Self.FK_Medicament_Ins_Inscription" FromRole="Medicament_Ins" ToRole="Inscription" />
+    <NavigationProperty Name="Medicament" Relationship="Self.FK_Medicament_Ins_Medicaments" FromRole="Medicament_Ins" ToRole="Medicaments" />
+  </EntityType>
+  <EntityType Name="Medicament">
+    <Key>
+      <PropertyRef Name="Medicament_ID" />
+    </Key>
+    <Property Name="Medicament_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Medicament_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Medicament_Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Medicament_Ins" Relationship="Self.FK_Medicament_Ins_Medicaments" FromRole="Medicaments" ToRole="Medicament_Ins" />
+  </EntityType>
+  <EntityType Name="Origine">
+    <Key>
+      <PropertyRef Name="Origine_ID" />
+    </Key>
+    <Property Name="Origine_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Origine_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Beneficiaires" Relationship="Self.FK_Beneficiaire_Origine" FromRole="Origine" ToRole="Beneficiaire" />
+  </EntityType>
+  <EntityType Name="Problemes_Ins">
+    <Key>
+      <PropertyRef Name="ProbIns_ID" />
+    </Key>
+    <Property Name="ProbIns_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProbIns_MedecinName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ProbIns_PsychiatreName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ProbIns_MedTel" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
+    <Property Name="Ins_ID" Type="Int32" Nullable="false" />
+    <Property Name="Prob_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inscription" Relationship="Self.FK_Problemes_Ins_Inscription" FromRole="Problemes_Ins" ToRole="Inscription" />
+    <NavigationProperty Name="Problemes_Type" Relationship="Self.FK_Problemes_Ins_Problemes_Type" FromRole="Problemes_Ins" ToRole="Problemes_Type" />
+  </EntityType>
+  <EntityType Name="Problemes_Type">
+    <Key>
+      <PropertyRef Name="Prob_ID" />
+    </Key>
+    <Property Name="Prob_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Prob_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prob_Desc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Problemes_Ins" Relationship="Self.FK_Problemes_Ins_Problemes_Type" FromRole="Problemes_Type" ToRole="Problemes_Ins" />
+  </EntityType>
+  <EntityType Name="Provenance">
+    <Key>
+      <PropertyRef Name="Provenance_ID" />
+    </Key>
+    <Property Name="Provenance_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Provenance_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Provenance" FromRole="Provenance" ToRole="Inscription" />
+  </EntityType>
+  <EntityType Name="Revenu_Ins">
+    <Key>
+      <PropertyRef Name="RevenuIns_ID" />
+    </Key>
+    <Property Name="RevenuIns_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RevenuIns_Montant" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Ins_ID" Type="Int32" Nullable="false" />
+    <Property Name="Revenu_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inscription" Relationship="Self.FK_Revenu_Ins_Inscription" FromRole="Revenu_Ins" ToRole="Inscription" />
+    <NavigationProperty Name="Revenu_Type" Relationship="Self.FK_Revenu_Ins_Revenu_Type" FromRole="Revenu_Ins" ToRole="Revenu_Type" />
+  </EntityType>
+  <EntityType Name="Revenu_Type">
+    <Key>
+      <PropertyRef Name="Revenu_ID" />
+    </Key>
+    <Property Name="Revenu_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Revenu_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Revenu_Ins" Relationship="Self.FK_Revenu_Ins_Revenu_Type" FromRole="Revenu_Type" ToRole="Revenu_Ins" />
+  </EntityType>
+  <EntityType Name="Sante">
+    <Key>
+      <PropertyRef Name="Sante_Ins_ID" />
+    </Key>
+    <Property Name="Sante_Ins_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type_ProbSante_ID" Type="Int32" Nullable="false" />
+    <Property Name="Sante_Desc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Sante_Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Bnf_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Beneficiaire" Relationship="Self.FK_Sante_Beneficiaire" FromRole="Sante" ToRole="Beneficiaire" />
+    <NavigationProperty Name="Type_ProbSante" Relationship="Self.FK_Sante_Type_ProbSante" FromRole="Sante" ToRole="Type_ProbSante" />
+  </EntityType>
+  <EntityType Name="Scolar">
+    <Key>
+      <PropertyRef Name="Scolar_ID" />
+    </Key>
+    <Property Name="Scolar_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Scolar_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Beneficiaires" Relationship="Self.FK_Beneficiaire_Scolar" FromRole="Scolar" ToRole="Beneficiaire" />
+  </EntityType>
+  <EntityType Name="Source_Ref">
+    <Key>
+      <PropertyRef Name="Ref_ID" />
+    </Key>
+    <Property Name="Ref_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ref_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Source_Ref" FromRole="Source_Ref" ToRole="Inscription" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Type_Hebergment">
+    <Key>
+      <PropertyRef Name="Hebergement_ID" />
+    </Key>
+    <Property Name="Hebergement_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hebergement_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Hebergement_Min" Type="Int32" Nullable="false" />
+    <Property Name="Hebergement_Max" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Type_Hebergment" FromRole="Type_Hebergment" ToRole="Inscription" />
+  </EntityType>
+  <EntityType Name="Type_ProbSante">
+    <Key>
+      <PropertyRef Name="Type_ProbSante_ID" />
+    </Key>
+    <Property Name="Type_ProbSante_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type_ProbSante_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Santes" Relationship="Self.FK_Sante_Type_ProbSante" FromRole="Type_ProbSante" ToRole="Sante" />
+  </EntityType>
+  <EntityType Name="Entreprise">
+    <Key>
+      <PropertyRef Name="Entreprise_ID" />
+    </Key>
+    <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Logo_Path" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Adresse" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ville" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CodePostal" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Couriel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Entreprise_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <Association Name="FK_Beneficiaire_Origine">
+    <End Role="Origine" Type="Self.Origine" Multiplicity="0..1" />
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Origine">
+        <PropertyRef Name="Origine_ID" />
+      </Principal>
+      <Dependent Role="Beneficiaire">
+        <PropertyRef Name="Origine_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Beneficiaire_Scolar">
+    <End Role="Scolar" Type="Self.Scolar" Multiplicity="0..1" />
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Scolar">
+        <PropertyRef Name="Scolar_ID" />
+      </Principal>
+      <Dependent Role="Beneficiaire">
+        <PropertyRef Name="Scolar_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupons_Bnf_Beneficiaire">
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="1" />
+    <End Role="Coupons_Bnf" Type="Self.Coupons_Bnf" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Beneficiaire">
+        <PropertyRef Name="Bnf_ID" />
+      </Principal>
+      <Dependent Role="Coupons_Bnf">
+        <PropertyRef Name="Bnf_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Formation_Bnf_Beneficiaire">
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="1" />
+    <End Role="Formation_Bnf" Type="Self.Formation_Bnf" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Beneficiaire">
+        <PropertyRef Name="Bnf_ID" />
+      </Principal>
+      <Dependent Role="Formation_Bnf">
+        <PropertyRef Name="Bnf_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscription_Beneficiaire">
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="1" />
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Beneficiaire">
+        <PropertyRef Name="Bnf_ID" />
+      </Principal>
+      <Dependent Role="Inscription">
+        <PropertyRef Name="Bnf_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sante_Beneficiaire">
+    <End Role="Beneficiaire" Type="Self.Beneficiaire" Multiplicity="1" />
+    <End Role="Sante" Type="Self.Sante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Beneficiaire">
+        <PropertyRef Name="Bnf_ID" />
+      </Principal>
+      <Dependent Role="Sante">
+        <PropertyRef Name="Bnf_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chambres_Chambres_Emplacement">
+    <End Role="Chambres_Emplacement" Type="Self.Chambres_Emplacement" Multiplicity="1" />
+    <End Role="Chambres" Type="Self.Chambre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chambres_Emplacement">
+        <PropertyRef Name="Emplacement_ID" />
+      </Principal>
+      <Dependent Role="Chambres">
+        <PropertyRef Name="Emplacement_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscription_Chambres">
+    <End Role="Chambres" Type="Self.Chambre" Multiplicity="1" />
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chambres">
+        <PropertyRef Name="Chambre_ID" />
+      </Principal>
+      <Dependent Role="Inscription">
+        <PropertyRef Name="Chambre_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupons_Bnf_Coupons_Type">
+    <End Role="Coupons_Type" Type="Self.Coupons_Type" Multiplicity="1" />
+    <End Role="Coupons_Bnf" Type="Self.Coupons_Bnf" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupons_Type">
+        <PropertyRef Name="Coupons_ID" />
+      </Principal>
+      <Dependent Role="Coupons_Bnf">
+        <PropertyRef Name="Coupons_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cours_Ins_Cours_Cond">
+    <End Role="Cours_Cond" Type="Self.Cours_Cond" Multiplicity="1" />
+    <End Role="Cours_Ins" Type="Self.Cours_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cours_Cond">
+        <PropertyRef Name="Cours_Cond_ID" />
+      </Principal>
+      <Dependent Role="Cours_Ins">
+        <PropertyRef Name="CoursCond_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cours_Ins_Inscription">
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+    <End Role="Cours_Ins" Type="Self.Cours_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inscription">
+        <PropertyRef Name="Ins_ID" />
+      </Principal>
+      <Dependent Role="Cours_Ins">
+        <PropertyRef Name="Ins_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Formation_Bnf_Formation">
+    <End Role="Formation" Type="Self.Formation" Multiplicity="1" />
+    <End Role="Formation_Bnf" Type="Self.Formation_Bnf" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Formation">
+        <PropertyRef Name="Formation_ID" />
+      </Principal>
+      <Dependent Role="Formation_Bnf">
+        <PropertyRef Name="Formation_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscription_Provenance">
+    <End Role="Provenance" Type="Self.Provenance" Multiplicity="1" />
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provenance">
+        <PropertyRef Name="Provenance_ID" />
+      </Principal>
+      <Dependent Role="Inscription">
+        <PropertyRef Name="Provenance_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscription_Source_Ref">
+    <End Role="Source_Ref" Type="Self.Source_Ref" Multiplicity="1" />
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Source_Ref">
+        <PropertyRef Name="Ref_ID" />
+      </Principal>
+      <Dependent Role="Inscription">
+        <PropertyRef Name="Ref_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscription_Type_Hebergment">
+    <End Role="Type_Hebergment" Type="Self.Type_Hebergment" Multiplicity="1" />
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_Hebergment">
+        <PropertyRef Name="Hebergement_ID" />
+      </Principal>
+      <Dependent Role="Inscription">
+        <PropertyRef Name="Hebergement_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medicament_Ins_Inscription">
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+    <End Role="Medicament_Ins" Type="Self.Medicament_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inscription">
+        <PropertyRef Name="Ins_ID" />
+      </Principal>
+      <Dependent Role="Medicament_Ins">
+        <PropertyRef Name="Ins_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Problemes_Ins_Inscription">
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+    <End Role="Problemes_Ins" Type="Self.Problemes_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inscription">
+        <PropertyRef Name="Ins_ID" />
+      </Principal>
+      <Dependent Role="Problemes_Ins">
+        <PropertyRef Name="Ins_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Revenu_Ins_Inscription">
+    <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+    <End Role="Revenu_Ins" Type="Self.Revenu_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inscription">
+        <PropertyRef Name="Ins_ID" />
+      </Principal>
+      <Dependent Role="Revenu_Ins">
+        <PropertyRef Name="Ins_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medicament_Ins_Medicaments">
+    <End Role="Medicaments" Type="Self.Medicament" Multiplicity="0..1" />
+    <End Role="Medicament_Ins" Type="Self.Medicament_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicaments">
+        <PropertyRef Name="Medicament_ID" />
+      </Principal>
+      <Dependent Role="Medicament_Ins">
+        <PropertyRef Name="Medicament_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Problemes_Ins_Problemes_Type">
+    <End Role="Problemes_Type" Type="Self.Problemes_Type" Multiplicity="1" />
+    <End Role="Problemes_Ins" Type="Self.Problemes_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Problemes_Type">
+        <PropertyRef Name="Prob_ID" />
+      </Principal>
+      <Dependent Role="Problemes_Ins">
+        <PropertyRef Name="Prob_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Revenu_Ins_Revenu_Type">
+    <End Role="Revenu_Type" Type="Self.Revenu_Type" Multiplicity="1" />
+    <End Role="Revenu_Ins" Type="Self.Revenu_Ins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Revenu_Type">
+        <PropertyRef Name="Revenu_ID" />
+      </Principal>
+      <Dependent Role="Revenu_Ins">
+        <PropertyRef Name="Revenu_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sante_Type_ProbSante">
+    <End Role="Type_ProbSante" Type="Self.Type_ProbSante" Multiplicity="1" />
+    <End Role="Sante" Type="Self.Sante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_ProbSante">
+        <PropertyRef Name="Type_ProbSante_ID" />
+      </Principal>
+      <Dependent Role="Sante">
+        <PropertyRef Name="Type_ProbSante_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MSAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Beneficiaires" EntityType="Self.Beneficiaire" />
+    <EntitySet Name="Chambres" EntityType="Self.Chambre" />
+    <EntitySet Name="Chambres_Emplacement" EntityType="Self.Chambres_Emplacement" />
+    <EntitySet Name="Coupons_Bnf" EntityType="Self.Coupons_Bnf" />
+    <EntitySet Name="Coupons_Type" EntityType="Self.Coupons_Type" />
+    <EntitySet Name="Cours_Cond" EntityType="Self.Cours_Cond" />
+    <EntitySet Name="Cours_Ins" EntityType="Self.Cours_Ins" />
+    <EntitySet Name="Formations" EntityType="Self.Formation" />
+    <EntitySet Name="Formation_Bnf" EntityType="Self.Formation_Bnf" />
+    <EntitySet Name="Inscriptions" EntityType="Self.Inscription" />
+    <EntitySet Name="Logins" EntityType="Self.Login" />
+    <EntitySet Name="Medicament_Ins" EntityType="Self.Medicament_Ins" />
+    <EntitySet Name="Medicaments" EntityType="Self.Medicament" />
+    <EntitySet Name="Origines" EntityType="Self.Origine" />
+    <EntitySet Name="Problemes_Ins" EntityType="Self.Problemes_Ins" />
+    <EntitySet Name="Problemes_Type" EntityType="Self.Problemes_Type" />
+    <EntitySet Name="Provenances" EntityType="Self.Provenance" />
+    <EntitySet Name="Revenu_Ins" EntityType="Self.Revenu_Ins" />
+    <EntitySet Name="Revenu_Type" EntityType="Self.Revenu_Type" />
+    <EntitySet Name="Santes" EntityType="Self.Sante" />
+    <EntitySet Name="Scolars" EntityType="Self.Scolar" />
+    <EntitySet Name="Source_Ref" EntityType="Self.Source_Ref" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Type_Hebergment" EntityType="Self.Type_Hebergment" />
+    <EntitySet Name="Type_ProbSante" EntityType="Self.Type_ProbSante" />
+    <EntitySet Name="Entreprises" EntityType="Self.Entreprise" />
+    <AssociationSet Name="FK_Beneficiaire_Origine" Association="Self.FK_Beneficiaire_Origine">
+      <End Role="Origine" EntitySet="Origines" />
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Beneficiaire_Scolar" Association="Self.FK_Beneficiaire_Scolar">
+      <End Role="Scolar" EntitySet="Scolars" />
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupons_Bnf_Beneficiaire" Association="Self.FK_Coupons_Bnf_Beneficiaire">
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+      <End Role="Coupons_Bnf" EntitySet="Coupons_Bnf" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Formation_Bnf_Beneficiaire" Association="Self.FK_Formation_Bnf_Beneficiaire">
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+      <End Role="Formation_Bnf" EntitySet="Formation_Bnf" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscription_Beneficiaire" Association="Self.FK_Inscription_Beneficiaire">
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+      <End Role="Inscription" EntitySet="Inscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sante_Beneficiaire" Association="Self.FK_Sante_Beneficiaire">
+      <End Role="Beneficiaire" EntitySet="Beneficiaires" />
+      <End Role="Sante" EntitySet="Santes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chambres_Chambres_Emplacement" Association="Self.FK_Chambres_Chambres_Emplacement">
+      <End Role="Chambres_Emplacement" EntitySet="Chambres_Emplacement" />
+      <End Role="Chambres" EntitySet="Chambres" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscription_Chambres" Association="Self.FK_Inscription_Chambres">
+      <End Role="Chambres" EntitySet="Chambres" />
+      <End Role="Inscription" EntitySet="Inscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupons_Bnf_Coupons_Type" Association="Self.FK_Coupons_Bnf_Coupons_Type">
+      <End Role="Coupons_Type" EntitySet="Coupons_Type" />
+      <End Role="Coupons_Bnf" EntitySet="Coupons_Bnf" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cours_Ins_Cours_Cond" Association="Self.FK_Cours_Ins_Cours_Cond">
+      <End Role="Cours_Cond" EntitySet="Cours_Cond" />
+      <End Role="Cours_Ins" EntitySet="Cours_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cours_Ins_Inscription" Association="Self.FK_Cours_Ins_Inscription">
+      <End Role="Inscription" EntitySet="Inscriptions" />
+      <End Role="Cours_Ins" EntitySet="Cours_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Formation_Bnf_Formation" Association="Self.FK_Formation_Bnf_Formation">
+      <End Role="Formation" EntitySet="Formations" />
+      <End Role="Formation_Bnf" EntitySet="Formation_Bnf" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscription_Provenance" Association="Self.FK_Inscription_Provenance">
+      <End Role="Provenance" EntitySet="Provenances" />
+      <End Role="Inscription" EntitySet="Inscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscription_Source_Ref" Association="Self.FK_Inscription_Source_Ref">
+      <End Role="Source_Ref" EntitySet="Source_Ref" />
+      <End Role="Inscription" EntitySet="Inscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscription_Type_Hebergment" Association="Self.FK_Inscription_Type_Hebergment">
+      <End Role="Type_Hebergment" EntitySet="Type_Hebergment" />
+      <End Role="Inscription" EntitySet="Inscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medicament_Ins_Inscription" Association="Self.FK_Medicament_Ins_Inscription">
+      <End Role="Inscription" EntitySet="Inscriptions" />
+      <End Role="Medicament_Ins" EntitySet="Medicament_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Problemes_Ins_Inscription" Association="Self.FK_Problemes_Ins_Inscription">
+      <End Role="Inscription" EntitySet="Inscriptions" />
+      <End Role="Problemes_Ins" EntitySet="Problemes_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Revenu_Ins_Inscription" Association="Self.FK_Revenu_Ins_Inscription">
+      <End Role="Inscription" EntitySet="Inscriptions" />
+      <End Role="Revenu_Ins" EntitySet="Revenu_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medicament_Ins_Medicaments" Association="Self.FK_Medicament_Ins_Medicaments">
+      <End Role="Medicaments" EntitySet="Medicaments" />
+      <End Role="Medicament_Ins" EntitySet="Medicament_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Problemes_Ins_Problemes_Type" Association="Self.FK_Problemes_Ins_Problemes_Type">
+      <End Role="Problemes_Type" EntitySet="Problemes_Type" />
+      <End Role="Problemes_Ins" EntitySet="Problemes_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Revenu_Ins_Revenu_Type" Association="Self.FK_Revenu_Ins_Revenu_Type">
+      <End Role="Revenu_Type" EntitySet="Revenu_Type" />
+      <End Role="Revenu_Ins" EntitySet="Revenu_Ins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sante_Type_ProbSante" Association="Self.FK_Sante_Type_ProbSante">
+      <End Role="Type_ProbSante" EntitySet="Type_ProbSante" />
+      <End Role="Sante" EntitySet="Santes" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MSAModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MSAModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
